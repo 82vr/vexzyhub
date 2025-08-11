@@ -812,67 +812,7 @@ end
 
 local Emotes = {
 
-	{ name = "Around Town", id = 3576747102, icon = "rbxthumb://type=Asset&id=3576747102&w=150&h=150", price = 1000, lastupdated = 1663264200, sort = {} 
-
--- Optimized paginated emote loader
-local ContentProvider = game:GetService("ContentProvider")
-local EMOTES_PER_PAGE = 40
-local currentPage = 1
-local totalPages = math.ceil(#Emotes / EMOTES_PER_PAGE)
-local emotePages = {}
-
--- Split emotes into pages
-for i = 1, #Emotes, EMOTES_PER_PAGE do
-    table.insert(emotePages, {unpack(Emotes, i, math.min(i + EMOTES_PER_PAGE - 1, #Emotes))})
-end
-
--- Function to load a page
-local function LoadEmotePage(pageNumber)
-    Frame:ClearAllChildren()
-    Grid.Parent = Frame
-    if emotePages[pageNumber] then
-        local assets = {}
-        for _, emote in ipairs(emotePages[pageNumber]) do
-            table.insert(assets, game:GetService("MarketplaceService"):GetProductInfo(emote.id))
-        end
-        -- Preload assets before creating buttons
-        pcall(function() ContentProvider:PreloadAsync(assets) end)
-        for _, emote in ipairs(emotePages[pageNumber]) do
-            local button = CreateButtonFromEmoteInfo(emote)
-            button.Parent = Frame
-            task.wait(0.03)
-        end
-    end
-end
-
--- Navigation buttons
-local PrevButton = Instance.new("TextButton")
-PrevButton.Text = "< Prev"
-PrevButton.Size = UDim2.new(0, 100, 0, 30)
-PrevButton.Position = UDim2.new(0, 10, 1, -40)
-PrevButton.Parent = BackFrame
-PrevButton.MouseButton1Click:Connect(function()
-    if currentPage > 1 then
-        currentPage -= 1
-        LoadEmotePage(currentPage)
-    end
-end)
-
-local NextButton = Instance.new("TextButton")
-NextButton.Text = "Next >"
-NextButton.Size = UDim2.new(0, 100, 0, 30)
-NextButton.Position = UDim2.new(1, -110, 1, -40)
-NextButton.Parent = BackFrame
-NextButton.MouseButton1Click:Connect(function()
-    if currentPage < totalPages then
-        currentPage += 1
-        LoadEmotePage(currentPage)
-    end
-end)
-
--- Initial load
-LoadEmotePage(1)
-},
+	{ name = "Around Town", id = 3576747102, icon = "rbxthumb://type=Asset&id=3576747102&w=150&h=150", price = 1000, lastupdated = 1663264200, sort = {} },
 
 {
 
